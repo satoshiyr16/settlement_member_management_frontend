@@ -1,0 +1,23 @@
+# ビルド出力ディレクトリ
+.next/
+build/
+dist/
+
+# 依存関係
+node_modules/
+
+# ログファイル
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 環境設定ファイル
+.env*
+
+# その他の設定ファイル
+.DS_Store
+.git/
+
+# 自動生成される可能性のあるファイル
+coverage/
