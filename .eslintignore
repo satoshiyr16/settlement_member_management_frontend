@@ -1,0 +1,21 @@
+# ビルド出力ディレクトリ
+build/
+.next/
+
+# 依存関係
+node_modules/
+
+# ログファイル
+*.log
+
+# 設定ファイル
+.env
+.eslintrc.json
+prettier.config.json
+next.config.ts
+tsconfig.json
+tailwind.config.ts
+
+# その他の設定ファイル
+.DS_Store
+.git/
