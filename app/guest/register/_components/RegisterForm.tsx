@@ -2,54 +2,74 @@
 
 import React from 'react'
 import { UseFormReturn } from 'react-hook-form'
+import { FaArrowRight } from 'react-icons/fa'
+import { useAtomValue } from 'jotai'
 import { Input } from '@/components/form/rhf/Input'
+import { RadioButton } from '@/components/form/rhf/RadioButton'
+import { getMasterDataAtom } from '@/app/_atoms/master-data-atom'
+import { BasicButton } from '@/components/ui/button/BasicButton'
 import { RegisterFormType } from '@/app/guest/register/_schemas/schema'
 
 interface RegisterFormProps {
-  formMode: 'form' | 'confirm'
+  methods: UseFormReturn<RegisterFormType>
   setFormMode: (mode: 'form' | 'confirm') => void
 }
 
-export const RegisterForm = ({ formMode, setFormMode }: RegisterFormProps) => {
+export const RegisterForm = ({ methods, setFormMode }: RegisterFormProps) => {
+  const masterData = useAtomValue(getMasterDataAtom)
+
   return (
-    <div className=''>
-      <Input
-        name='email'
-        label='メールアドレス'
-        inputType='email'
-        placeholder='example@example.com'
-        displayError={true}
-      />
-
-      <Input
-        name='password'
-        label='パスワード'
-        inputType='password'
-        placeholder='8文字以上で入力'
-        displayError={true}
-      />
-
-      <Input
-        name='name'
-        label='お名前'
-        inputType='text'
-        placeholder='山田太郎'
-        displayError={true}
-      />
-
-      <Input
-        name='phone'
-        label='電話番号（任意）'
-        inputType='tel'
-        placeholder='090-1234-5678'
-      />
-
-      <button
-        type='button'
-        onClick={() => setFormMode('confirm')}
-      >
-        確認する
-      </button>
-    </div>
+    <>
+      <div>
+        <Input
+          name='email'
+          label='メールアドレス'
+          inputType='email'
+          placeholder='example@example.com'
+        />
+        <Input
+          name='password'
+          label='パスワード'
+          inputType='password'
+          placeholder='8文字以上32文字以下で入力'
+        />
+        <Input
+          name='password_confirmation'
+          label='パスワード（確認用）'
+          inputType='password'
+        />
+        <Input
+          name='nickname'
+          label='ニックネーム'
+          inputType='text'
+          placeholder='ニックネーム'
+        />
+        <Input name='birth_date' label='生年月日' inputType='date' type='date' />
+        <RadioButton
+          name='gender'
+          values={masterData?.genders || []}
+          color='pjGray'
+          label='性別'
+        />
+      </div>
+      <div className='mt-20 flex justify-center'>
+        <BasicButton
+          type='button'
+          buttonType='button'
+          onClick={() => {
+            methods.trigger()
+            if (methods.formState.isValid) {
+              setFormMode('confirm')
+            }
+          }}
+          variant='outlined'
+          outerClassName='w-[30%]'
+          innerClassName='w-full'
+          rightIcon={<FaArrowRight size={20} />}
+        >
+          確認する
+        </BasicButton>
+      </div>
+    </>
   )
 }

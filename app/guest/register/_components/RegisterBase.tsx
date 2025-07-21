@@ -20,8 +20,10 @@ export const RegisterBase = () => {
     defaultValues: {
       email: '',
       password: '',
-      name: '',
-      phone: '',
+      password_confirmation: '',
+      nickname: '',
+      birth_date: '',
+      gender: undefined,
     },
   })
 
@@ -29,8 +31,14 @@ export const RegisterBase = () => {
     try {
       const result = await registerAction(data)
 
-      if (result?.error) {
-        console.error('登録エラー:', result.error)
+      if (result?.errors && result.status === 400) {
+        setFormMode('form')
+        Object.entries(result.errors).forEach(([field, messages]) => {
+          methods.setError(field as keyof RegisterFormType, {
+            type: 'server',
+            message: Array.isArray(messages) ? messages[0] : messages,
+          })
+        })
       }
     } catch (error) {
       console.error('フォーム送信エラー:', error)
@@ -40,12 +48,21 @@ export const RegisterBase = () => {
   return (
     <div className=''>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className=''>
-          {formMode === 'form' ? (
-            <RegisterForm formMode={formMode} setFormMode={setFormMode} />
-          ) : (
-            <RegisterConfirm methods={methods} formMode={formMode} setFormMode={setFormMode} onSubmit={onSubmit} />
-          )}
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className='w-[80%] mx-auto min-h-[70vh]'
+        >
+          <div className='min-h-[70vh] flex flex-col justify-between'>
+            {formMode === 'form' ? (
+              <RegisterForm methods={methods} setFormMode={setFormMode} />
+            ) : (
+              <RegisterConfirm
+                methods={methods}
+                setFormMode={setFormMode}
+                onSubmit={onSubmit}
+              />
+            )}
+          </div>
         </form>
       </FormProvider>
     </div>
