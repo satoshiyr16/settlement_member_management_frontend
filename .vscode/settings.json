@@ -47,4 +47,5 @@
   "eslint.codeActionsOnSave.mode": "all",
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "eslint.quiet": false,
+  "css.validate": false,
 }
