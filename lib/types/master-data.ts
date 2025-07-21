@@ -1,4 +1,4 @@
-interface BaseMasterDataType {
+export interface BaseMasterDataType {
   value: number
   label: string
 }

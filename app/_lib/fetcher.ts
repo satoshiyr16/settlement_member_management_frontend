@@ -1,5 +1,5 @@
 import { apiBase } from '@/lib/api/api-base'
-import { MasterDataType } from '@/app/_types/master-data'
+import { MasterDataType } from '@/lib/types/master-data'
 
 export async function fetchMasterData(): Promise<MasterDataType> {
   try {

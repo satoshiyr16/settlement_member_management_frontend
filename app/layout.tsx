@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import { fetchMasterData } from '@/app/_api/fetcher'
+import { fetchMasterData } from '@/app/_lib/fetcher'
 import { JotaiMasterDataProvider } from '@/app/_atoms/JotaiMasterDataProvider'
 
 const geistSans = Geist({
@@ -25,7 +25,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const masterData = await fetchMasterData()
-
+  
   return (
     <html lang='ja'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
