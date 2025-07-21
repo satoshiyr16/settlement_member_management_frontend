@@ -73,12 +73,12 @@ export class ApiBase {
     }
 
     const response = await fetch(`${this.baseURL}${endpoint}`, config)
-
+    
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
       return {
         success: false,
-        error: errorData.message || `error! status: ${response.status}`,
+        errors: errorData.errors,
         status: response.status,
       } as ApiBaseResponse<T>
     }
