@@ -25,10 +25,10 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const masterData = await fetchMasterData()
-  
+
   return (
     <html lang='ja'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
         <JotaiMasterDataProvider initialMasterData={masterData}>
           {children}
         </JotaiMasterDataProvider>
