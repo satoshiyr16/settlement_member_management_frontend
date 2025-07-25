@@ -5,7 +5,7 @@ import { UseFormReturn } from 'react-hook-form'
 import { useAtomValue } from 'jotai'
 import { FaArrowLeft } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
-import { RegisterFormType } from '@/app/guest/register/_schemas/schema'
+import { RegisterFormType } from '@/app/guest/register/_schemas/register-schema'
 import { BasicButton } from '@/components/ui/button/BasicButton'
 import { CustomModal } from '@/components/ui/modal/CustomModal'
 import { getMasterDataAtom } from '@/app/_atoms/master-data-atom'
@@ -34,7 +34,8 @@ export const RegisterConfirm = ({
               type='button'
               buttonType='button'
               onClick={() => setShowModal(false)}
-              variant='outlined'
+              color='pjGray'
+              variant='contained'
               outerClassName='w-[30%]'
               innerClassName='w-full'
               leftIcon={<IoClose size={28} />}

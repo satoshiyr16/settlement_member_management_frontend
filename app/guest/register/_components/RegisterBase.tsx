@@ -9,7 +9,8 @@ import { registerAction } from '@/app/guest/register/_lib/action'
 import {
   registerSchema,
   type RegisterFormType,
-} from '@/app/guest/register/_schemas/schema'
+} from '@/app/guest/register/_schemas/register-schema'
+import { HTTP_STATUS } from '@/constants/api-status'
 
 export const RegisterBase = () => {
   const [formMode, setFormMode] = useState<'form' | 'confirm'>('form')
@@ -31,7 +32,7 @@ export const RegisterBase = () => {
     try {
       const result = await registerAction(data)
 
-      if (result?.errors && result.status === 400) {
+      if (result?.errors && result.status === HTTP_STATUS.BAD_REQUEST) {
         setFormMode('form')
         Object.entries(result.errors).forEach(([field, messages]) => {
           methods.setError(field as keyof RegisterFormType, {

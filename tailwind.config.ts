@@ -6,6 +6,8 @@ const config: Config = {
     extend: {
       colors: {
         pjGray: 'var(--color-pjGray)',
+        pjYellow: 'var(--color-pjYellow)',
+        pjOrange: 'var(--color-pjOrange)',
       },
     },
   },

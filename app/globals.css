@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-pjGray: #6b7280;
+  --color-pjGray: #D3D3D3;
+  --color-pjYellow: #FFD700;
+  --color-pjOrange: #FFB347;
+  --color-pjRed: #FF6666;
 }

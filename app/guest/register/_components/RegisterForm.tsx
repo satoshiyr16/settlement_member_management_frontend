@@ -8,7 +8,7 @@ import { Input } from '@/components/form/rhf/Input'
 import { RadioButton } from '@/components/form/rhf/RadioButton'
 import { getMasterDataAtom } from '@/app/_atoms/master-data-atom'
 import { BasicButton } from '@/components/ui/button/BasicButton'
-import { RegisterFormType } from '@/app/guest/register/_schemas/schema'
+import { RegisterFormType } from '@/app/guest/register/_schemas/register-schema'
 
 interface RegisterFormProps {
   methods: UseFormReturn<RegisterFormType>

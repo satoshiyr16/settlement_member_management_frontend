@@ -44,15 +44,21 @@ export function BasicButton({
   const colorClasses: Record<ColorOptionTypes, Record<VariantOptionTypes, string>> = {
     pjGray: {
       contained:
-        'bg-gray-300 text-black hover:bg-gray-300/80 active:bg-gray-300/70 rounded border-2 border-black',
+        'bg-pjGray text-black hover:bg-pjGray/80 active:bg-pjGray/70 rounded border-2 border-black',
       outlined:
-        'border-2 border-guestPrimary text-black hover:bg-guestPrimary/10 active:bg-guestPrimary/20 rounded',
+        'border-2 border-black text-black hover:bg-pjGray/10 active:bg-pjGray/20 rounded',
     },
     pjYellow: {
       contained:
         'bg-yellow-200 text-black hover:bg-yellow-200/80 active:bg-yellow-200/70 rounded border-2 border-black',
       outlined:
         'border-2 border-yellow-300 text-black hover:bg-yellow-300/10 active:bg-yellow-300/20 rounded',
+    },
+    pjRed: {
+      contained:
+        'bg-pjRed text-white hover:bg-pjRed/80 active:bg-pjRed/70 rounded border-2 border-black',
+      outlined:
+        '',
     },
   }
 

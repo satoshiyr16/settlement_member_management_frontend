@@ -8,7 +8,7 @@ import { HTTP_STATUS } from '@/constants/api-status'
 
 export async function registerAction(data: RegisterFormType) {
   try {
-    const response = await apiBase.post('/api/member/register', data)
+    const response = await apiBase.post('/api/member/provisional-register', data)
     if (response.success) {
       revalidatePath('/guest/register')
       redirect('/guest/login')
