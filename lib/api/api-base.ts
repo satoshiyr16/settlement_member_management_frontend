@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import 'server-only'
-import { notFound } from 'next/navigation'
+
 import { ApiBaseResponse } from '@/lib/types/api-base'
 export class ApiBase {
   private baseURL: string
@@ -10,10 +10,10 @@ export class ApiBase {
   }
 
   private async getBaseRequest<T>(
-    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+    method: 'GET',
     endpoint: string,
     params?: Record<string, unknown>,
-  ): Promise<T> {
+  ): Promise<ApiBaseResponse<T>> {
     const headers: Record<string, string> = {
       Accept: 'application/json',
     }
@@ -23,31 +23,32 @@ export class ApiBase {
       credentials: 'include',
     }
 
-    if (method === 'GET') {
-      const url = new URL(`${this.baseURL}${endpoint}`)
-      if (params) {
-        Object.entries(params).forEach(([key, value]) => {
-          if (value !== undefined && value !== null) {
-            url.searchParams.append(key, String(value))
-          }
-        })
-      }
-      endpoint = url.pathname + url.search
+    const url = new URL(`${this.baseURL}${endpoint}`)
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          url.searchParams.append(key, String(value))
+        }
+      })
     }
+    endpoint = url.pathname + url.search
 
     const response = await fetch(`${this.baseURL}${endpoint}`, config)
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
-
-      if (method === 'GET' && response.status === 404) {
-        notFound()
-      }
-
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+      return {
+        success: false,
+        errors: errorData.errors,
+        status: response.status,
+      } as ApiBaseResponse<T>
     }
 
-    return response.json()
+    return {
+      success: true,
+      data: await response.json(),
+      status: response.status,
+    } as ApiBaseResponse<T>
   }
 
   private async postBaseRequest<T>(
@@ -73,7 +74,7 @@ export class ApiBase {
     }
 
     const response = await fetch(`${this.baseURL}${endpoint}`, config)
-    
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
       return {
@@ -91,7 +92,10 @@ export class ApiBase {
     } as ApiBaseResponse<T>
   }
 
-  async get<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
+  async get<T>(
+    endpoint: string,
+    params?: Record<string, any>,
+  ): Promise<ApiBaseResponse<T>> {
     return this.getBaseRequest<T>('GET', endpoint, params)
   }
 

@@ -1,21 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-// import { registerAction } from '@/app/guest/register/_lib/action'
 import { FiAlertTriangle } from 'react-icons/fi'
 import { IoIosSend } from 'react-icons/io'
 import { IoClose } from 'react-icons/io5'
 import { BasicButton } from '@/components/ui/button/BasicButton'
 import { CustomModal } from '@/components/ui/modal/CustomModal'
+import { LoadingOverlay } from '@/components/ui/loading/LoadingOverlay'
+import { Input } from '@/components/form/rhf/Input'
+import { provRegisterAction } from '@/app/guest/provisional-register/_lib/action'
 import {
   provRegisterSchema,
   type ProvRegisterFormType,
 } from '@/app/guest/provisional-register/_schemas/prov-register-schema'
-import { Input } from '@/components/form/rhf/Input'
+import { HTTP_STATUS } from '@/constants/api-status'
 
 export const ProvRegisterForm = () => {
+  const [isPending, startTransition] = useTransition()
   const [showModal, setShowModal] = useState(false)
 
   const methods = useForm<ProvRegisterFormType>({
@@ -27,19 +30,19 @@ export const ProvRegisterForm = () => {
   })
 
   const onSubmit = async (data: ProvRegisterFormType) => {
-    try {
-      // const result = await registerAction(data)
-      // if (result?.errors && result.status === 400) {
-      //   Object.entries(result.errors).forEach(([field, messages]) => {
-      //     methods.setError(field as keyof ProvRegisterFormType, {
-      //       type: 'server',
-      //       message: Array.isArray(messages) ? messages[0] : messages,
-      //     })
-      //   })
-      // }
-    } catch (error) {
-      console.error('フォーム送信エラー:', error)
-    }
+    setShowModal(false)
+    startTransition(async () => {
+      const result = await provRegisterAction(data)
+
+      if (result?.errors && result.status === HTTP_STATUS.BAD_REQUEST) {
+        Object.entries(result.errors).forEach(([field, messages]) => {
+          methods.setError(field as keyof ProvRegisterFormType, {
+            type: 'server',
+            message: Array.isArray(messages) ? messages[0] : messages,
+          })
+        })
+      }
+    })
   }
 
   return (
@@ -86,6 +89,7 @@ export const ProvRegisterForm = () => {
                 outerClassName='w-[30%]'
                 innerClassName='w-full'
                 rightIcon={<IoIosSend size={28} />}
+                disabled={isPending}
               >
                 送信する
               </BasicButton>
@@ -106,6 +110,7 @@ export const ProvRegisterForm = () => {
               outerClassName='w-[30%]'
               innerClassName='w-full'
               leftIcon={<IoClose size={28} />}
+              disabled={isPending}
             >
               キャンセル
             </BasicButton>
@@ -119,12 +124,14 @@ export const ProvRegisterForm = () => {
               variant='contained'
               outerClassName='w-[30%]'
               innerClassName='w-full'
+              disabled={isPending}
             >
               はい
             </BasicButton>
           </div>
         </div>
       </CustomModal>
+      <LoadingOverlay isVisible={isPending} message='仮登録処理中...' />
     </>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RegisterForm } from '@/app/guest/register/_components/RegisterForm'
@@ -12,14 +12,20 @@ import {
 } from '@/app/guest/register/_schemas/register-schema'
 import { HTTP_STATUS } from '@/constants/api-status'
 
-export const RegisterBase = () => {
+interface RegisterBaseProps {
+  email: string
+}
+
+export const RegisterBase = ({ email }: RegisterBaseProps) => {
+  const [isPending, startTransition] = useTransition()
+  const [showModal, setShowModal] = useState(false)
   const [formMode, setFormMode] = useState<'form' | 'confirm'>('form')
 
   const methods = useForm<RegisterFormType>({
     resolver: zodResolver(registerSchema),
     mode: 'all',
     defaultValues: {
-      email: '',
+      email: email,
       password: '',
       password_confirmation: '',
       nickname: '',
@@ -29,21 +35,20 @@ export const RegisterBase = () => {
   })
 
   const onSubmit = async (data: RegisterFormType) => {
-    try {
-      const result = await registerAction(data)
+    setShowModal(false)
+    startTransition(async () => {
+      const response = await registerAction(data)
 
-      if (result?.errors && result.status === HTTP_STATUS.BAD_REQUEST) {
+      if (response?.errors && response.status === HTTP_STATUS.BAD_REQUEST) {
         setFormMode('form')
-        Object.entries(result.errors).forEach(([field, messages]) => {
+        Object.entries(response.errors).forEach(([field, messages]) => {
           methods.setError(field as keyof RegisterFormType, {
             type: 'server',
             message: Array.isArray(messages) ? messages[0] : messages,
           })
         })
       }
-    } catch (error) {
-      console.error('フォーム送信エラー:', error)
-    }
+    })
   }
 
   return (
@@ -55,12 +60,15 @@ export const RegisterBase = () => {
         >
           <div className='min-h-[70vh] flex flex-col justify-between'>
             {formMode === 'form' ? (
-              <RegisterForm methods={methods} setFormMode={setFormMode} />
+              <RegisterForm email={email} methods={methods} setFormMode={setFormMode} />
             ) : (
               <RegisterConfirm
+                showModal={showModal}
+                setShowModal={setShowModal}
                 methods={methods}
                 setFormMode={setFormMode}
                 onSubmit={onSubmit}
+                isPending={isPending}
               />
             )}
           </div>

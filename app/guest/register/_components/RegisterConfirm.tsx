@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { useAtomValue } from 'jotai'
 import { FaArrowLeft } from 'react-icons/fa'
@@ -11,17 +10,22 @@ import { CustomModal } from '@/components/ui/modal/CustomModal'
 import { getMasterDataAtom } from '@/app/_atoms/master-data-atom'
 
 interface RegisterConfirmProps {
+  showModal: boolean
+  setShowModal: (showModal: boolean) => void
   methods: UseFormReturn<RegisterFormType>
   setFormMode: (mode: 'form' | 'confirm') => void
   onSubmit: (data: RegisterFormType) => void
+  isPending: boolean
 }
 
 export const RegisterConfirm = ({
+  showModal,
+  setShowModal,
   methods,
   setFormMode,
   onSubmit,
+  isPending,
 }: RegisterConfirmProps) => {
-  const [showModal, setShowModal] = useState(false)
   const masterData = useAtomValue(getMasterDataAtom)
 
   return (
@@ -39,6 +43,7 @@ export const RegisterConfirm = ({
               outerClassName='w-[30%]'
               innerClassName='w-full'
               leftIcon={<IoClose size={28} />}
+              disabled={isPending}
             >
               キャンセル
             </BasicButton>
@@ -52,6 +57,7 @@ export const RegisterConfirm = ({
               variant='contained'
               outerClassName='w-[30%]'
               innerClassName='w-full'
+              disabled={isPending}
             >
               はい
             </BasicButton>
@@ -95,6 +101,7 @@ export const RegisterConfirm = ({
           outerClassName='w-[30%]'
           innerClassName='w-full'
           leftIcon={<FaArrowLeft size={20} />}
+          disabled={isPending}
         >
           戻る
         </BasicButton>
@@ -107,6 +114,7 @@ export const RegisterConfirm = ({
           variant='contained'
           outerClassName='w-[30%]'
           innerClassName='w-full'
+          disabled={isPending}
         >
           登録する
         </BasicButton>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { fetchMasterData } from '@/app/_lib/fetcher'
 import { JotaiMasterDataProvider } from '@/app/_atoms/JotaiMasterDataProvider'
+import { CsrfTokenSetter } from '@/app/_components/CsrfTokenSetter'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,7 +29,10 @@ export default async function RootLayout({
 
   return (
     <html lang='ja'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+      >
+        <CsrfTokenSetter />
         <JotaiMasterDataProvider initialMasterData={masterData}>
           {children}
         </JotaiMasterDataProvider>

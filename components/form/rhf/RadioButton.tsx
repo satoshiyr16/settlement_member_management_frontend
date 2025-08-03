@@ -22,7 +22,7 @@ interface RadioButtonProps extends ComponentPropsWithoutRef<'input'> {
 
 const colorClasses: Record<string, string> = {
   pjGray:
-    'focus:ring focus:ring-pjGray focus:ring-opacity-50 border-pjGray checked:border-pjGray before:bg-pjGray',
+    'focus:ring focus:ring-black focus:ring-opacity-50 border-black checked:border-black before:bg-black',
 }
 
 export function RadioButton({

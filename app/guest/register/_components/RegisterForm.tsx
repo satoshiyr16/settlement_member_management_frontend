@@ -11,22 +11,21 @@ import { BasicButton } from '@/components/ui/button/BasicButton'
 import { RegisterFormType } from '@/app/guest/register/_schemas/register-schema'
 
 interface RegisterFormProps {
+  email: string
   methods: UseFormReturn<RegisterFormType>
   setFormMode: (mode: 'form' | 'confirm') => void
 }
 
-export const RegisterForm = ({ methods, setFormMode }: RegisterFormProps) => {
+export const RegisterForm = ({ email, methods, setFormMode }: RegisterFormProps) => {
   const masterData = useAtomValue(getMasterDataAtom)
 
   return (
     <>
       <div>
-        <Input
-          name='email'
-          label='メールアドレス'
-          inputType='email'
-          placeholder='example@example.com'
-        />
+        <div>
+          <p className='font-extrabold'>メールアドレス</p>
+          <p className='mt-4 ml-4 text-gray-500'>{email}</p>
+        </div>
         <Input
           name='password'
           label='パスワード'

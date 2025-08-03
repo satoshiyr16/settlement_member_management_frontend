@@ -2,12 +2,13 @@ import { apiBase } from '@/lib/api/api-base'
 import { MasterDataType } from '@/lib/types/master-data'
 
 export async function fetchMasterData(): Promise<MasterDataType> {
-  try {
-    const masterData = await apiBase.get<MasterDataType>('/api/master-data')
-    return masterData
-  } catch {
+  const masterData = await apiBase.get<MasterDataType>('/api/master-data')
+
+  if (masterData.success && masterData.data) {
     return {
-      genders: [],
+      genders: masterData.data.genders || [],
     }
   }
+
+  throw new Error(`マスターデータの取得に失敗しました。`)
 }
