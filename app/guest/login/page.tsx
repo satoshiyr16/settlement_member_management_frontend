@@ -1,6 +1,9 @@
 import { LoginForm } from '@/app/guest/login/_components/LoginForm'
+import { fetchMemberAuthCheck } from '@/app/guest/login/_lib/fetcher'
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  await fetchMemberAuthCheck()
+
   return (
     <div className='mt-4 mx-6'>
       <div className='mx-auto p-6 bg-white rounded-lg shadow-md border-2 border-black'>

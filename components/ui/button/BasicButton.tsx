@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 // import { clsx } from 'clsx'
 import React from 'react'
-import { ColorOptionTypes, VariantOptionTypes } from '@/lib/types/color'
+import { ColorOptionTypes, VariantOptionTypes } from '@/types/color'
 
 interface BasicButtonProps {
   onClick?: () => void
@@ -57,8 +57,7 @@ export function BasicButton({
     pjRed: {
       contained:
         'bg-pjRed text-white hover:bg-pjRed/80 active:bg-pjRed/70 rounded border-2 border-black',
-      outlined:
-        '',
+      outlined: '',
     },
   }
 

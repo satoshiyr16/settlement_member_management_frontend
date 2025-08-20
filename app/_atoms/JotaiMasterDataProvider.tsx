@@ -3,7 +3,7 @@
 import { Provider } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
 import { setMasterDataAtom } from '@/app/_atoms/master-data-atom'
-import { MasterDataType } from '@/lib/types/master-data'
+import { MasterDataType } from '@/types/master-data'
 
 interface JotaiMasterDataProviderProps {
   initialMasterData: MasterDataType
@@ -14,19 +14,16 @@ export function JotaiMasterDataProvider({
   initialMasterData,
   children,
 }: JotaiMasterDataProviderProps) {
-
   return (
     <Provider>
-      <HydratedAtoms initialMasterData={initialMasterData}>
-        {children}
-      </HydratedAtoms>
+      <HydratedAtoms initialMasterData={initialMasterData}>{children}</HydratedAtoms>
     </Provider>
   )
 }
 
 function HydratedAtoms({
   initialMasterData,
-  children
+  children,
 }: {
   initialMasterData: MasterDataType
   children: React.ReactNode

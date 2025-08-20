@@ -1,23 +1,27 @@
 'use client'
 
-import { useEffect } from 'react'
-
+import { useEffect, useState } from 'react'
+import { apiClient } from '@/lib/api/api-client'
 /**
- * laravelのsanctumはspaを想定した設定のため、CSRでfetchすることで、
+ * laravelのsanctumはspaを想定した設定のため、Clientでfetchすることで、
  * cookieにCSRF-TOKEN（XSRF-TOKEN）をセットする
  */
 export const CsrfTokenSetter = () => {
-  useEffect(() => {
-    const initializeCsrfToken = async () => {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8888'
+  const [firstRender, setFirstRender] = useState(false)
 
-      await fetch(`${apiUrl}/api/init`, {
-        credentials: 'include',
-      })
+  useEffect(() => {
+    if (firstRender) return
+    setFirstRender(true)
+
+    const initializeCsrfToken = async () => {
+      const response = await apiClient.get(`/api/init`)
+      if (!response.success) {
+        console.error('CSRF Token:', response.errors)
+      }
     }
 
     initializeCsrfToken()
-  }, [])
+  }, [firstRender])
 
   return null
 }

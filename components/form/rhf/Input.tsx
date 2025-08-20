@@ -3,7 +3,7 @@
 import { useFormContext } from 'react-hook-form'
 import type { ComponentProps } from 'react'
 import { ErrorContent } from '@/components/form/rhf/ErrorContent'
-import { ColorOptionTypes } from '@/lib/types/color'
+import { ColorOptionTypes } from '@/types/color'
 
 interface InputProps extends ComponentProps<'input'> {
   name: string

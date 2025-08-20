@@ -3,8 +3,8 @@
 import { useFormContext } from 'react-hook-form'
 import type { ComponentPropsWithoutRef } from 'react'
 import { ErrorContent } from '@/components/form/rhf/ErrorContent'
-import { BaseMasterDataType } from '@/lib/types/master-data'
-import { ColorOptionTypes } from '@/lib/types/color'
+import { BaseMasterDataType } from '@/types/master-data'
+import { ColorOptionTypes } from '@/types/color'
 
 interface RadioButtonProps extends ComponentPropsWithoutRef<'input'> {
   name: string

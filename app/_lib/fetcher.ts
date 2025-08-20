@@ -1,8 +1,10 @@
-import { apiBase } from '@/lib/api/api-base'
-import { MasterDataType } from '@/lib/types/master-data'
+'server-only'
+
+import { apiServer } from '@/lib/api/api-server'
+import { MasterDataType } from '@/types/master-data'
 
 export async function fetchMasterData(): Promise<MasterDataType> {
-  const masterData = await apiBase.get<MasterDataType>('/api/master-data')
+  const masterData = await apiServer.get<MasterDataType>('/api/master-data')
 
   if (masterData.success && masterData.data) {
     return {

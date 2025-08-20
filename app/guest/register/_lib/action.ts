@@ -2,13 +2,13 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { apiBase } from '@/lib/api/api-base'
+import { apiServer } from '@/lib/api/api-server'
 import { RegisterFormType } from '@/app/guest/register/_schemas/register-schema'
 import { HTTP_STATUS } from '@/constants/api-status'
 
 export async function registerAction(data: RegisterFormType) {
-  const response = await apiBase.post('/api/member/register', data)
-  
+  const response = await apiServer.post('/api/member/register', data)
+
   if (response.success) {
     revalidatePath('/guest/register')
     redirect('/guest/login')

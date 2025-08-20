@@ -6,7 +6,7 @@ import { FaArrowLeft } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
 import { RegisterFormType } from '@/app/guest/register/_schemas/register-schema'
 import { BasicButton } from '@/components/ui/button/BasicButton'
-import { CustomModal } from '@/components/ui/modal/CustomModal'
+import { CustomModal } from '@/components/features/modal/CustomModal'
 import { getMasterDataAtom } from '@/app/_atoms/master-data-atom'
 
 interface RegisterConfirmProps {

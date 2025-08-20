@@ -2,12 +2,12 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { apiBase } from '@/lib/api/api-base'
+import { apiServer } from '@/lib/api/api-server'
 import { ProvRegisterFormType } from '@/app/guest/provisional-register/_schemas/prov-register-schema'
 import { HTTP_STATUS } from '@/constants/api-status'
 
 export async function provRegisterAction(data: ProvRegisterFormType) {
-  const response = await apiBase.post('/api/member/provisional-register', data)
+  const response = await apiServer.post('/api/member/provisional-register', data)
   if (response.success) {
     revalidatePath('/guest/provisional-register')
     redirect('/guest/provisional-register/complete')
