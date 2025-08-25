@@ -13,7 +13,7 @@ export async function fetchMemberAuthCheck() {
     redirect('/member')
   }
 
-  if (memberAuthInfo.errors && memberAuthInfo.status === HTTP_STATUS.UNAUTHORIZED) {
+  if (!memberAuthInfo.success && memberAuthInfo.status === HTTP_STATUS.UNAUTHORIZED) {
     return null
   }
 
