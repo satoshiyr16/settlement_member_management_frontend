@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
 
     try {
       const urlOrigin = request.nextUrl.origin
-      await fetch(authCheckUrl, {
+      const response = await fetch(authCheckUrl, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -31,6 +31,11 @@ export async function middleware(request: NextRequest) {
           Origin: urlOrigin,
         },
       })
+
+      if (!response.ok) {
+        const toRedirectUrl = new URL(redirectUrl, request.url)
+        return NextResponse.redirect(toRedirectUrl)
+      }
 
       return NextResponse.next()
     } catch {
