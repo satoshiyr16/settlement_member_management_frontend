@@ -10,3 +10,12 @@
   --color-pjSoftBlue: #e3f2fd;
   --color-pjSoftGreen: #c8e6c9;
 }
+
+.pj-text-stroke-black {
+  color: white;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}

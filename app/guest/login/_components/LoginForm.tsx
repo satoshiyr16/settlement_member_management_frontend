@@ -30,6 +30,7 @@ export const LoginForm = () => {
 
       if (response.success) {
         router.push('/member')
+        return
       }
 
       if (
@@ -43,6 +44,7 @@ export const LoginForm = () => {
             message: Array.isArray(messages) ? messages[0] : messages,
           })
         })
+        return
       }
 
       throw new Error('ログインに失敗しました。もう一度お試しください。')

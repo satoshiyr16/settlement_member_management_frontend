@@ -1,18 +1,14 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Noto_Sans } from 'next/font/google'
 import './globals.css'
 import { fetchMasterData } from '@/app/_lib/fetcher'
 import { JotaiMasterDataProvider } from '@/app/_atoms/JotaiMasterDataProvider'
 import { CsrfTokenSetter } from '@/app/_components/CsrfTokenSetter'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const notoSans = Noto_Sans({
+  variable: '--font-noto-sans',
   subsets: ['latin'],
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  weight: ['400', '500', '700'],
 })
 
 export const metadata: Metadata = {
@@ -30,7 +26,7 @@ export default async function RootLayout({
   return (
     <html lang='ja'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+        className={`${notoSans.variable} antialiased min-h-screen`}
       >
         <CsrfTokenSetter />
         <JotaiMasterDataProvider initialMasterData={masterData}>

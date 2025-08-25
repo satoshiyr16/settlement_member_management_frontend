@@ -59,6 +59,24 @@ export function BasicButton({
         'bg-pjRed text-white hover:bg-pjRed/80 active:bg-pjRed/70 rounded border-2 border-black',
       outlined: '',
     },
+    pjSoftBlue: {
+      contained:
+        'bg-pjSoftBlue text-black hover:bg-pjSoftBlue/80 active:bg-pjSoftBlue/70 rounded border-2 border-black',
+      outlined:
+        'border-2 border-pjSoftBlue text-black hover:bg-pjSoftBlue/10 active:bg-pjSoftBlue/20 rounded',
+    },
+    pjSoftYellow: {
+      contained:
+        'bg-pjSoftYellow text-black hover:bg-pjSoftYellow/80 active:bg-pjSoftYellow/70 rounded border-2 border-black',
+      outlined:
+        'border-2 border-pjSoftYellow text-black hover:bg-pjSoftYellow/10 active:bg-pjSoftYellow/20 rounded',
+    },
+    white: {
+      contained:
+        'bg-white text-black hover:bg-white/80 active:bg-white/70 rounded border-2 border-black',
+      outlined:
+        'border-2 border-white text-black hover:bg-white/10 active:bg-white/20 rounded',
+    },
   }
 
   const selectedClasses =

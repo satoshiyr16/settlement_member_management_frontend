@@ -1,10 +1,9 @@
 import { MainTitle } from '@/app/member/_components/MainTitle'
 
-export default function MemberPage() {
+export default function LearningPlanPage() {
   return (
     <div className=''>
-      <MainTitle title='HOME' subTitle='ホーム' />
-      
+      <MainTitle title='LEARNING PLAN' subTitle='学習プラン' />
     </div>
   )
 }
