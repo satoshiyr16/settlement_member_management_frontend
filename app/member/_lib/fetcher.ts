@@ -1,8 +1,6 @@
 'server-only'
 
-import { redirect } from 'next/navigation'
 import { apiServer } from '@/lib/api/api-server'
-import { HTTP_STATUS } from '@/constants/api-status'
 import { MemberAuthType } from '@/app/member/_types/member-auth'
 
 export async function fetchMemberAuthInfo() {
@@ -14,9 +12,23 @@ export async function fetchMemberAuthInfo() {
     return memberAuthInfo.data
   }
 
-  if (memberAuthInfo.errors && memberAuthInfo.status === HTTP_STATUS.UNAUTHORIZED) {
-    return redirect('/guest/login')
+  return {
+    user: {
+      user_id: 0,
+      email: '',
+      role: 0,
+      suspended_at: '',
+      created_at: '',
+      updated_at: '',
+    },
+    member: {
+      member_id: 0,
+      nickname: '',
+      gender: 0,
+      birth_date: '',
+      enrollment_date: '',
+      created_at: '',
+      updated_at: '',
+    },
   }
-
-  throw new Error(`メンバー認証情報の取得に失敗しました。`)
 }
