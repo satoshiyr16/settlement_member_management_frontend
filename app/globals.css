@@ -1,9 +1,11 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-pjGray: #D3D3D3;
-  --color-pjYellow: #FFD700;
-  --color-pjOrange: #FFB347;
-  --color-pjRed: #FF6666;
-  --color-pjLightGreen: #00ff00;
+  --color-pjGray: #d3d3d3;
+  --color-pjYellow: #FFEB3B;
+  --color-pjOrange: #ffb347;
+  --color-pjSoftGray: #f5f5f5;
+  --color-pjSoftYellow: #fff59d;
+  --color-pjSoftBlue: #e3f2fd;
+  --color-pjSoftGreen: #c8e6c9;
 }
