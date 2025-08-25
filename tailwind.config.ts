@@ -8,6 +8,7 @@ const config: Config = {
         pjGray: 'var(--color-pjGray)',
         pjYellow: 'var(--color-pjYellow)',
         pjOrange: 'var(--color-pjOrange)',
+        pjBlue: 'var(--color-pjBlue)',
         pjSoftGray: 'var(--color-pjSoftGray)',
         pjSoftYellow: 'var(--color-pjSoftYellow)',
         pjSoftBlue: 'var(--color-pjSoftBlue)',
