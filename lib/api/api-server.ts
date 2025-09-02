@@ -114,8 +114,15 @@ class ApiServerBase {
         } as ApiBaseResponse<T>
       }
 
-      const result = await response.json()
+      const responseText = await response.text()
+      if (!responseText || responseText.trim() === '') {
+        return {
+          success: true,
+          status: response.status,
+        }
+      }
 
+      const result = JSON.parse(responseText)
       return {
         success: true,
         data: result,

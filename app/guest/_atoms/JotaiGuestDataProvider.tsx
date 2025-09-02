@@ -5,15 +5,15 @@ import { useHydrateAtoms } from 'jotai/utils'
 import { setMasterDataAtom } from '@/app/_atoms/master-data-atom'
 import { MasterDataType } from '@/types/master-data'
 
-interface JotaiMasterDataProviderProps {
+interface GuestDataProviderProps {
   initialMasterData: MasterDataType
   children: React.ReactNode
 }
 
-export function JotaiMasterDataProvider({
+export function JotaiGuestDataProvider({
   initialMasterData,
   children,
-}: JotaiMasterDataProviderProps) {
+}: GuestDataProviderProps) {
   return (
     <Provider>
       <HydratedAtoms initialMasterData={initialMasterData}>{children}</HydratedAtoms>

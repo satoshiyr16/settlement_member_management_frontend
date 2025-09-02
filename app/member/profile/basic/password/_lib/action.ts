@@ -3,15 +3,15 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { apiServer } from '@/lib/api/api-server'
-import { EditMailFormType } from '@/app/member/profile/basic/mail-edit/_schemas/edit-mail-shema'
+import { EditPasswordFormType } from '@/app/member/profile/basic/password/_schemas/schema'
 import { HTTP_STATUS } from '@/constants/api-status'
 
-export async function editMailAction(data: EditMailFormType) {
-  const response = await apiServer.post('/api/member/profile/edit-mail', data)
+export async function editPasswordAction(data: EditPasswordFormType) {
+  const response = await apiServer.patch('/api/member/profile/password', data)
 
   if (response.success) {
-    revalidatePath('/member/profile/basic/mail-edit')
-    redirect('/member/profile/basic/mail-edit/complete')
+    revalidatePath('/member/profile/basic/password')
+    redirect('/member/profile/basic/password/complete')
   }
 
   if (response.errors && response.status === HTTP_STATUS.BAD_REQUEST) {

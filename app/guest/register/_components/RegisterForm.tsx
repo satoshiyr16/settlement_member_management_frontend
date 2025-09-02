@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import { useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { FaArrowRight } from 'react-icons/fa'
 import { useAtomValue } from 'jotai'
@@ -8,6 +8,7 @@ import { Input } from '@/components/form/rhf/Input'
 import { RadioButton } from '@/components/form/rhf/RadioButton'
 import { getMasterDataAtom } from '@/app/_atoms/master-data-atom'
 import { BasicButton } from '@/components/ui/button/BasicButton'
+import { ShowPasswordButton } from '@/components/ui/button/ShowPasswordButton'
 import { RegisterFormType } from '@/app/guest/register/_schemas/register-schema'
 
 interface RegisterFormProps {
@@ -17,6 +18,7 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm = ({ email, methods, setFormMode }: RegisterFormProps) => {
+  const [showPassword, setShowPassword] = useState(false)
   const masterData = useAtomValue(getMasterDataAtom)
 
   return (
@@ -37,6 +39,12 @@ export const RegisterForm = ({ email, methods, setFormMode }: RegisterFormProps)
           label='パスワード（確認用）'
           inputType='password'
         />
+        <div className='flex justify-end'>
+          <ShowPasswordButton
+            showPassword={showPassword}
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </div>
         <Input
           name='nickname'
           label='ニックネーム'

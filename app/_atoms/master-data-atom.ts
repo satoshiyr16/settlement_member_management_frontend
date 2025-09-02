@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import { MasterDataType } from '@/types/master-data'
 
-const masterDataAtom = atom<MasterDataType | null>(null)
+export const masterDataAtom = atom<MasterDataType | null>(null)
 
 export const setMasterDataAtom = atom(null, (_, set, newMasterData: MasterDataType) => {
   set(masterDataAtom, newMasterData)

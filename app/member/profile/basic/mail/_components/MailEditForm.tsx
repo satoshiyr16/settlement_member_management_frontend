@@ -1,40 +1,39 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useAtomValue } from 'jotai'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import { FaArrowLeft, FaCheck, FaCheckDouble } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
 import { Input } from '@/components/form/rhf/Input'
 import { BasicButton } from '@/components/ui/button/BasicButton'
 import { CustomModal } from '@/components/features/modal/CustomModal'
-import { editMailAction } from '@/app/member/profile/basic/mail-edit/_lib/action'
+import { editMailAction } from '@/app/member/profile/basic/mail/_lib/action'
+import { getMemberAuthAtom } from '@/app/member/_atoms/member-data-atom'
 import {
   editMailSchema,
   type EditMailFormType,
-} from '@/app/member/profile/basic/mail-edit/_schemas/edit-mail-shema'
+} from '@/app/member/profile/basic/mail/_schemas/edit-mail-schema'
 import { HTTP_STATUS } from '@/constants/api-status'
 
-interface MailEditFormProps {
-  email: string
-}
-
-export const MailEditForm = ({ email }: MailEditFormProps) => {
+export const MailEditForm = () => {
   const [isPending, startTransition] = useTransition()
   const [showModal, setShowModal] = useState(false)
 
+  const memberAuth = useAtomValue(getMemberAuthAtom)
+  const currentEmail = memberAuth?.user.email ?? 'メールアドレス取得エラー'
   const methods = useForm<EditMailFormType>({
     resolver: zodResolver(editMailSchema),
     mode: 'all',
     defaultValues: {
-      current_email: email,
+      current_email: currentEmail,
       new_email: '',
       new_email_confirmation: '',
     },
   })
 
   const onSubmit = async (data: EditMailFormType) => {
-    setShowModal(false)
     startTransition(async () => {
       const response = await editMailAction(data)
 
@@ -56,7 +55,9 @@ export const MailEditForm = ({ email }: MailEditFormProps) => {
             <div className=''>
               <div>
                 <p className='font-extrabold'>現在のメールアドレス</p>
-                <p className='mt-4 ml-4 text-gray-500'>{email}</p>
+                <p className='mt-4 ml-4 text-gray-500'>
+                  {currentEmail}
+                </p>
               </div>
               <Input
                 name='new_email'
@@ -79,24 +80,24 @@ export const MailEditForm = ({ email }: MailEditFormProps) => {
                 outerClassName='w-[30%]'
                 innerClassName='w-full'
                 leftIcon={<FaArrowLeft size={20} />}
-                // disabled={isPending}
+                disabled={isPending}
               >
                 戻る
               </BasicButton>
               <BasicButton
                 type='button'
                 buttonType='button'
-                onClick={() => {
-                  methods.trigger()
-                  if (methods.formState.isValid) {
+                onClick={async () => {
+                  const isValid = await methods.trigger()
+                  if (isValid) {
                     setShowModal(true)
                   }
                 }}
                 variant='outlined'
                 outerClassName='w-[30%]'
                 innerClassName='w-full'
-                rightIcon={<FaArrowRight size={20} />}
-                // disabled={isPending}
+                rightIcon={<FaCheck size={20} />}
+                disabled={isPending}
               >
                 確認する
               </BasicButton>
@@ -123,12 +124,13 @@ export const MailEditForm = ({ email }: MailEditFormProps) => {
               type='button'
               buttonType='button'
               onClick={() => {
+                setShowModal(false)
                 onSubmit(methods.getValues())
               }}
-              color='pjSoftBlue'
-              variant='contained'
+              variant='outlined'
               outerClassName='w-[20%]'
               innerClassName='w-full'
+              rightIcon={<FaCheckDouble size={20} />}
               disabled={isPending}
             >
               変更する
